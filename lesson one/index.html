@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using the Fetch API</title>
+</head>
+<body>
+    <h1>We are using the fetch API to get the image on this page</h1>
+    <img src="" alt="" id="image">
+    
+
+    <script>
+        console.log("About to fetch a tain")
+        // fetch('Train.JPG')
+        //     .then(response =>{
+        //         console.log(response);
+        //         return response.blob();
+        //     })
+        //     .then(data => {
+        //         console.log("we just got the data now.")
+        //         console.log(data);
+        //         document.getElementById("image").src = URL.createObjectURL(data);
+
+        //     })
+        //     .catch(err => {
+        //         console.error(err)
+        //     })
+
+            // async function getImage() {
+            //     const respond = await fetch("Train.JPG")
+            //     // console.log(respond)
+            //     const blob = await respond.blob()
+            //     document.getElementById("image").src = URL.createObjectURL(blob);
+            // }
+
+            const getImage = async () =>{
+                const respond = await fetch("Train.JPG")
+                // console.log(respond)
+                const blob = await respond.blob()
+                document.getElementById("image").src = URL.createObjectURL(blob);
+            }
+
+            getImage()
+                .then(response => {
+                    console.log("Yay!")
+                })
+                .catch(error => {
+                console.error(err)
+            })
+    </script>
+</body>
+</html>
