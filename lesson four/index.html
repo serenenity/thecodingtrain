@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading JSON On A Live Map</title>
+</head>
+<body>
+    <!-- 
+        this app is making an api call to the iss server and 
+        the data we got back are plotted on the map tile using 
+        the leaflet opensoure map library and openmap api
+     -->
+
+    <script>
+
+        api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
+
+        const iSS = async () => {
+            const responses = await fetch(api_url);
+            const data_json = await responses.json();
+            let {latitude , longitude } = data_json;
+           
+            console.log(latitude + " " + longitude);
+
+            return {latitude, longitude}
+        }
+
+        iSS()
+        .then(load => {
+            console.log("Yay!!!!");
+        })
+        .catch(err =>{
+            console.error(err);
+        })
+    </script>
+</body>
+</html>
