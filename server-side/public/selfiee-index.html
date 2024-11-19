@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>selfy App</title>
+</head>
+<body>
+    <h1>this is a selfieeee app.</h1>
+
+    <!-- <form action="/check_in" method="get">
+        <button>check in</button>
+    </form> -->
+    <a href="/" >Check In</a>
+    <a href="view_checkins.html">View Checkins</a>
+    <p>you are currently at position.</p>
+    <p>latitude : <span id="lat"></span></p>
+    <p>longitude : <span id="lng"></span></p>
+
+    <button id="checkins">Check In</button>
+
+    <script>
+        // import dotenv from 'dotenv';
+        // dotenv.config();
+        // const google_API_key = process.env.GOOGLE_MAP_API;
+        let lat, lng
+
+        document.querySelector('#checkins').addEventListener('click', async (event)=>{
+            // alert("Hello world.");
+            const data = {lat, lng};
+                    const options = {
+                        method: 'POST',
+                        // mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+                    const response = await fetch('/api', options);
+                    const j_data = await response.json();
+                    console.log(j_data)
+            
+        });
+
+        if('geolocation' in navigator){
+                console.log("gelocation is available. ");
+                navigator.geolocation.getCurrentPosition( async (position) => {
+                    lat = position.coords.latitude;
+                    document.getElementById('lat').textContent = lat.toFixed(2);
+
+                    lng = position.coords.longitude;
+                    document.getElementById('lng').textContent = lng.toFixed(2);
+                    const api_URL = `weather/${lat},${lng}`;
+                    // const api_URL = '/weather';
+                    const respond = await fetch(api_URL);
+                    const json_data = await respond.json();;
+                    console.log(json_data);
+                    // console.log(position.coords.latitude, position.coords.longitude);
+                    // package a data and send it to our server
+                    
+                });
+            } else{
+                console.log("geolocation not available. ");
+            }
+
+        
+
+//         navigator.geolocation.getCurrentPosition(
+//   (position) => {
+//     const latitude = position.coords.latitude;
+//     const longitude = position.coords.longitude;
+//     console.log(latitude, longitude);
+
+//     // Use Google Maps Platform's Geolocation API to enhance accuracy:
+//     // 'https://cors-anywhere.herokuapp.com/https://www.googleapis.com/geolocation/v1/geolocate?key=YOUR_API_KEY&location=9.0570752%2C7.4481664'
+//     const geolocationApiUrl = `https://cors-anywhere.herokuapp.com/https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCaI_6vmEAG9F9afdtgLLtFYzyU1dnnSrU&location=${latitude}%2C${longitude}`;
+
+//     fetch(geolocationApiUrl)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         // Process the enhanced geolocation data
+//         const improvedLatitude = data.location.lat;
+//         const improvedLongitude = data.location.lng;
+//         // ...
+//         console.log(improvedLatitude, " " ,improvedLongitude)
+//       })
+//       .catch((error) => {
+//         // Handle errors
+//         console.error('Error:', error);
+//       });
+//   },
+//   (error) => {
+//     // Handle geolocation errors (e.g., user denied permission)
+//     console.error('Error:', error);
+//   }
+// );
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "name": "theWeatherApp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "type" : "module",
+    "express": "^4.21.0",
+    "nedb": "^1.8.0",
+    "node-fetch": "^3.3.2"
+  }
+}

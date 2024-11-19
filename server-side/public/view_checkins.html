@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View all check ins</title>
+    <style>
+        p{
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #ffaaff;
+        }
+    </style>
+</head>
+<body>
+    <a href="/">Check In</a>
+    <a href="view_checkins.html">View Checkins</a>
+
+    <script>
+        const data = async  ()=>{
+            const response = await fetch('/api');
+            const j_data = await response.json();
+            console.log(j_data)
+
+            for (const item of j_data) {
+                const root = document.createElement("p");
+                // const mood = document.createElement("div");
+                const geo = document.createElement("div");
+                const date = document.createElement("div");
+
+                // mood.textContent = item.mood;
+                geo.textContent = `Lattitude ${item.lat}°, Longitude ${item.lng}°`;
+                date.textContent = new Date(item.timestamp).toLocaleString();
+
+                root.append( geo, date);
+                document.body.append(root);
+            }
+        }
+        
+        data();
+    </script>
+</body>
+</html>

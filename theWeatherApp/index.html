@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weather App</title>
+</head>
+<body>
+    <h1>this is a selfieeee app.</h1>
+
+    <!-- <form action="/check_in" method="get">
+        <button>check in</button>
+    </form> -->
+    <a href="/" >Check In</a>
+    <a href="view_checkins.html">View Checkins</a>
+    <p>you are currently at position.</p>
+    <p>latitude : <span id="lat"></span></p>
+    <p>longitude : <span id="lng"></span></p>
+
+    <button id="checkins">Check In</button>
+
+    <script>
+        // import dotenv from 'dotenv';
+        // dotenv.config();
+        // const google_API_key = process.env.GOOGLE_MAP_API;
+        let lat, lng
+
+        document.querySelector('#checkins').addEventListener('click', async (event)=>{
+            // alert("Hello world.");
+            const data = {lat, lng};
+                    const options = {
+                        method: 'POST',
+                        // mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+                    const response = await fetch('/api', options);
+                    const j_data = await response.json();
+                    console.log(j_data)
+            
+        });
+
+        if('geolocation' in navigator){
+                console.log("gelocation is available. ");
+                navigator.geolocation.getCurrentPosition( async (position) => {
+                    lat = position.coords.latitude;
+                    document.getElementById('lat').textContent = lat.toFixed(2);
+
+                    lng = position.coords.longitude;
+                    document.getElementById('lng').textContent = lng.toFixed(2);
+                    // const api_URL = `weather/${lat},${lng}`;
+                    const api_URL = `/weather`;
+                    const respond = await fetch(api_URL);
+                    const json_data = await fetch(respond);
+                    console.log(json_data);
+                    // console.log(position.coords.latitude, position.coords.longitude);
+                    // package a data and send it to our server
+                    
+                });
+            } else{
+                console.log("geolocation not available. ");
+            }
+
+    </script>
+</body>
+</html>

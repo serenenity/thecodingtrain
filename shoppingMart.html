@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoppingMart App</title>
+</head>
+<body>
+    <form id="signupForm">
+        <input type="text" placeholder="user name" id="username" required> <br>
+        <input type="email" placeholder="email" id="email" required><br>
+        <input type="password" placeholder="user password" id="password" required><br>
+        <button type="submit">Sign up</button>
+    </form>
+
+    <p id="success" style="color: green;"></p>
+
+    <script>
+
+
+        document.getElementById('signupForm').addEventListener('submit', async (event) => {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Get values from the input fields
+            let username = document.getElementById('username').value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let success = document.getElementById('success')
+
+            // Create the data object
+            const data = {
+                "username": username,
+                "email": email,
+                "password": password
+            };
+
+            try {
+                // Configure the fetch options
+                const options = {
+                    method: 'POST',
+                    // mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)  // Convert data to JSON string
+                };
+
+                // Send the POST request
+                const response = await fetch('http://127.0.0.1:5000/api/signup/customer', options);
+
+                // Handle the response
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Success:', responseData);  // Log the success response
+                    success.innerText = responseData.message;
+                    
+                    clearform();
+                    
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error:', errorData);  // Log the error response
+                }
+            } catch (error) {
+                console.error('Network error:', error);  // Catch and log network errors
+            }
+        });
+
+        function clearform(){
+
+            let username = document.getElementById('username');
+            let email = document.getElementById('email');
+            let password = document.getElementById('password');
+
+            if (username && email && password) {
+                    username.value = '';  // Clear the username input field
+                    email.value = '';     // Clear the email input field
+                    password.value = '';  // Clear the password input field
+                    console.log('Input fields cleared');
+                } else {
+                    console.error('Input fields not found');
+                }
+        }
+    </script>
+</body>
+</html>
